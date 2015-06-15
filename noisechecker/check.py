@@ -89,7 +89,8 @@ class NoiseChecker(Thread):
         return math.sqrt(sum_squares / count)
 
 
-if __name__ == "__main__":
+
+def start_and_monitor():
     noise_checker = NoiseChecker()
     noise_checker.start()
 
@@ -102,3 +103,6 @@ if __name__ == "__main__":
                 logger.info("{0:.3f}".format(average))
 
     NoisePrinter().start()
+
+if __name__ == "__main__":
+    start_and_monitor()
