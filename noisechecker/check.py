@@ -15,13 +15,15 @@ logger.setLevel(logging.INFO)
 logging.info('Dummy')
 
 SHORT_NORMALIZE = (1.0 / 32768.0)
+ROLLING_AVERAGE_LIMIT = 10
 
 from threading import Thread
 
-ROLLING_AVERAGE_LIMIT = 10
-
 
 class NoiseChecker(Thread):
+    """
+    Loop on listen and store the sound amplitude in a rolling average
+    """
 
     def __init__(self):
         super().__init__()
@@ -84,7 +86,6 @@ class NoiseChecker(Thread):
             sum_squares += n * n
 
         import math
-
         return math.sqrt(sum_squares / count)
 
 
@@ -97,6 +98,7 @@ if __name__ == "__main__":
             while True:
                 from time import sleep
                 sleep(1)
-                print(noise_checker.get_average())
+                average = noise_checker.get_average()
+                logger.info("{0:.3f}".format(average))
 
     NoisePrinter().start()

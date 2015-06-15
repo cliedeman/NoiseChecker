@@ -5,6 +5,12 @@ logger = logging.getLogger(__name__)
 
 
 def find_input_device(pa):
+    """
+    Attempt to find a recording device and bind to it
+    :type  pyaudio.PyAudio pa:
+    :return:
+    """
+
     device_index = None
     for i in range(pa.get_device_count()):
         dev_info = pa.get_device_info_by_index(i)
