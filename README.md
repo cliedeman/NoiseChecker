@@ -1,6 +1,5 @@
-#Setup:
-
-Install Dependencies, Navigate to the root folder of the project and run:
+##Install Dependencies
+Navigate to the root folder of the project and run:
 
 ```
 python setup.py develop
