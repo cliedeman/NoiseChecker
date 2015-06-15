@@ -1,0 +1,8 @@
+venv/
+.idea/workspace.xml
+.idea/tasks.xml
+
+# Python Sepcific
+__pycache__/
+*.py[cod]
+*$py.class
