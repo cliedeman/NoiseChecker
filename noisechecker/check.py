@@ -17,6 +17,8 @@ logging.info('Dummy')
 SHORT_NORMALIZE = (1.0 / 32768.0)
 ROLLING_AVERAGE_LIMIT = 10
 
+NOISE_THRESHOLD = 0.09
+
 from threading import Thread
 
 
@@ -89,7 +91,6 @@ class NoiseChecker(Thread):
         return math.sqrt(sum_squares / count)
 
 
-
 def start_and_monitor():
     noise_checker = NoiseChecker()
     noise_checker.start()
@@ -101,6 +102,18 @@ def start_and_monitor():
                 sleep(1)
                 average = noise_checker.get_average()
                 logger.info("{0:.3f}".format(average))
+
+                if average > NOISE_THRESHOLD:
+                    logger.debug('Sound Exceeded noise threshold')
+
+                    import platform
+                    if platform.system() == 'Windows':
+                        import winsound
+                        frequency = 2500  # Set Frequency To 2500 Hertz
+                        duration = 1000  # Set Duration To 1000 ms == 1 second
+                        winsound.Beep(frequency, duration)
+                    else:
+                        logger.warn("Sound not implemented on linux")
 
     NoisePrinter().start()
 
